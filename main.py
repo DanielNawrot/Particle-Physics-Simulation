@@ -3,15 +3,18 @@ import random
 from particle import Particle
 from box import Box
 
+WIDTH = 800
+HWIGHT = 800
 pygame.init()
-screen = pygame.display.set_mode((800,800))
+screen = pygame.display.set_mode((WIDTH,HEIGHT)) # Set window resolution to desired size
 clock = pygame.time.Clock()
 FPS = 60
 
-box =  Box(10, 790, 10, 790)
+box =  Box(10, WIDTH - 10, 10, HEIGHT - 10)
 
 particles = []
-for i in range(100):
+for i in range(100): 
+    # Creates an array of randomly sized and placed particles
     particles.append(Particle(random.randint(50, 750), random.randint(50, 750), int(random.random() * 400) - 300, int(random.random() * 400) - 300, 0, 0, random.randrange(1, 5), 1))
 
 
@@ -33,19 +36,12 @@ while running:
     # Coded
     draw_Box()
     for i in range(len(particles)):
-        particles[i].update(1/FPS, box)
+        particles[i].update(1/FPS, box) # Updates wach particle's velocity & position individually
         j = i + 1
         for j in range(len(particles)):
-            particles[i].handleParticleCollision(particles[j])
+            particles[i].handleParticleCollision(particles[j]) # Handles each particles collisions individually
     for p in particles:
         draw_Particle(p)
-   #p1.update(1/FPS, box)
-   #p1.handleParticleCollision(p2)
-   #p2.update(1/FPS, box)
-   #p2.handleParticleCollision(p1)
-
-   #draw_Particle(p1)
-   #draw_Particle(p2)
 
     pygame.display.flip()
     clock.tick(FPS)
