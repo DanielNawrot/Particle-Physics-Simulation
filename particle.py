@@ -22,6 +22,7 @@ class Particle:
         self.radius = math.sqrt(self.mass) * 4
 
     def update(self, dt, box):
+        # Uses basic kinematic equations for position and velocity
         self.vx = self.vx + self.ax * dt
         self.vy = self.vy + self.ay * dt
         self.px = self.px + self.vx * dt
@@ -44,6 +45,7 @@ class Particle:
             self.px = box.right - self.radius
 
     def handleParticleCollision(self, other):
+        # Checks the distance between itself and all other particles to detect whether it overlaps with any other particles
         dist = math.dist((self.px, self.py), (other.px, other.py))
         sumOfR = other.radius + self.radius
 
@@ -55,6 +57,7 @@ class Particle:
                 self.py += ((other.py - self.py) / dist) * (overlap*0.6)
                 other.py -= ((other.py - self.py) / dist) * (overlap*0.6)
 
+            # We use the equation for two dimensional moving bodies collisions
             vxfA = self.vx + (((2 * other.mass)/(self.mass + other.mass)) * ((other.vx - self.vx) * (other.px - self.px) / pow(math.fabs(other.px - self.px), 2))) * (other.px - self.px)
             vyfA = self.vy+ (((2 * other.mass)/(self.mass + other.mass)) * ((other.vy - self.vy) * (other.py - self.py) / pow(math.fabs(other.py - self.py), 2))) * (other.py - self.py)
 
